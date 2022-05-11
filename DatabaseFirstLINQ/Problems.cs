@@ -16,12 +16,12 @@ namespace DatabaseFirstLINQ
         public void RunLINQQueries()
         {
             ProblemOne();
-            //ProblemTwo();
-            //ProblemThree();
-            //ProblemFour();
-            //ProblemFive();
-            //ProblemSix();
-            //ProblemSeven();
+            ProblemTwo();
+            ProblemThree();
+            ProblemFour();
+            ProblemFive();
+            ProblemSix();
+            ProblemSeven();
             //ProblemEight();
             //ProblemNine();
             //ProblemTen();
@@ -63,27 +63,47 @@ namespace DatabaseFirstLINQ
         {
             // Write a LINQ query that gets each product where the products price is greater than $150.
             // Then print the name and price of each product from the above query to the console.
-
+            var products = _context.Products.Where(p => p.Price > 150);
+            foreach (Product product in products)
+            {
+                Console.WriteLine($"Product Name:  {product.Name} Price:  {product.Price}");
+            }
         }
 
         private void ProblemFour()
         {
             // Write a LINQ query that gets each product that contains an "s" in the products name.
             // Then print the name of each product from the above query to the console.
-
+            var ProductS = _context.Products.Where(p => p.Name.Contains("s"));
+            foreach (Product product in ProductS)
+            {
+                    Console.WriteLine($"Product Name:  {product.Name} ");
+            }
         }
 
         private void ProblemFive()
         {
             // Write a LINQ query that gets all of the users who registered BEFORE 2016
             // Then print each user's email and registration date to the console.
-
+            DateTime dt1 = new DateTime(2016, 01, 01);
+            var earlyUsers = _context.Users.Where(p =>p.RegistrationDate < dt1);
+            foreach (User user in earlyUsers)
+            {
+                Console.WriteLine($"User Email: {user.Email} User Registration Date : {user.RegistrationDate}");
+            }
         }
 
         private void ProblemSix()
         {
             // Write a LINQ query that gets all of the users who registered AFTER 2016 and BEFORE 2018
             // Then print each user's email and registration date to the console.
+            DateTime dt1 = new DateTime(2016, 12, 31);
+            DateTime dt2 = new DateTime(2018, 01, 01);
+            var certainUsers = _context.Users.Where(p => p.RegistrationDate > dt1 & p.RegistrationDate < dt2);
+            foreach (User user in certainUsers)
+            {
+                Console.WriteLine($"User Email: {user.Email} User Registration Date : {user.RegistrationDate}");
+            }
 
         }
 
@@ -96,7 +116,8 @@ namespace DatabaseFirstLINQ
             var customerUsers = _context.UserRoles.Include(ur => ur.Role).Include(ur => ur.User).Where(ur => ur.Role.RoleName == "Customer");
             foreach (UserRole userRole in customerUsers)
             {
-                Console.WriteLine($"Email: {userRole.User.Email} Role: {userRole.Role.RoleName}");
+                Console.WriteLine($"+" +
+                    $"Email: {userRole.User.Email} Role: {userRole.Role.RoleName}");
             }
         }
 
@@ -104,6 +125,7 @@ namespace DatabaseFirstLINQ
         {
             // Write a LINQ query that retreives all of the products in the shopping cart of the user who has the email "afton@gmail.com".
             // Then print the product's name, price, and quantity to the console.
+            
 
         }
 
